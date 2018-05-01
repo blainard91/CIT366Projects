@@ -63,7 +63,7 @@ function Set() {
             return null;
         }
 
-        var intersection = this.intersection = function(listA, listB);
+        var intersection = this.intersection(listA, listB);
 
         var i;
 
@@ -84,7 +84,7 @@ function Set() {
             return null;
         }
 
-        var intersection = this.intersection = function(listA, listB);
+        var intersection = this.intersection(listA, listB);
 
         var i;
 
