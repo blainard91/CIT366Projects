@@ -63,18 +63,7 @@ function Set() {
             return null;
         }
 
-        var intersection = [];
-
-        for (var i = 0; i < listA.length; i++) {
-            var nextValue = listA[i];
-
-            for (var j = 0; j < listB.length; j++) {
-                if (listB[j] === nextValue) {
-                    intersection.push(listB[j]);
-                    break;
-                }
-            }
-        }
+        var intersection = this.intersection = function(listA, listB);
 
         var i;
 
@@ -95,18 +84,7 @@ function Set() {
             return null;
         }
 
-        var intersection = [];
-
-        for (var i = 0; i < listA.length; i++) {
-            var nextValue = listA[i];
-
-            for (var j = 0; j < listB.length; j++) {
-                if (listB[j] === nextValue) {
-                    intersection.push(listB[j]);
-                    break;
-                }
-            }
-        }
+        var intersection = this.intersection = function(listA, listB);
 
         var i;
 
