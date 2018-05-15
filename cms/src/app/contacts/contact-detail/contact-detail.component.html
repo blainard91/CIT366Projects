@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1>{{ contact?.name }}</h1>
+    <div class="row pad-all">
+      <div class="clear-fix pull-left">
+        <img src="{{ contact?.imageUrl }}" alt="{{ contact?.name }}" class="img-responsive" style="padding: 2em;">
+      </div>
+      <div class="pull-right" style="padding: 20px; margin-top: 60px;">
+        <button type="button" class="btn btn-primary" style="margin: 2.5px; font-size: 1.5em;">Edit</button>
+        <button type="button" class="btn btn-danger" style="margin: 2.5px; font-size: 1.5em;">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="pad-left-right" style="padding: 1em; font-size: 1.2em;">
+      <div class="row" *ngIf="contact?.email" style="padding: 1em;">
+        <label>Email: </label>
+        <span class="label-value">  {{ contact?.email }}</span>
+      </div>
+      <div class="row" *ngIf="contact?.phone" style="padding: 1em;">
+        <label>Phone: </label>
+        <span class="label-value">  {{ contact?.phone }}</span>
+      </div>
+    </div>
+  </div>
+</div>
