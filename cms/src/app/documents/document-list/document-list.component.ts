@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {Document} from "../../documents/document.model";
 import {DocumentService} from "../../documents/documents.service";
+import {Params} from "@angular/router";
+import {Message} from "../../messages/message.model";
 
 @Component({
   selector: 'cms-document-list',
@@ -15,10 +17,12 @@ export class DocumentListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.documentService.documentChangedEvent.subscribe(
+      (documents: Document[]) => {
+        this.documents = documents;
+      })
   }
 
-  onSelectedDocument(document: Document) {
-    this.documentService.documentSelectedEvent.emit(document);
-  }
+
 
 }

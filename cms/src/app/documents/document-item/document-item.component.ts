@@ -11,6 +11,7 @@ export class DocumentItemComponent implements OnInit {
 
   constructor() { }
   @Input() document: Document;
+  @Input() index: string;
 
   ngOnInit() {
   }
