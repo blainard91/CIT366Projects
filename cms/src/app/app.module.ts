@@ -24,6 +24,8 @@ import {ContactService} from "./contacts/contact.service";
 import {MessageService} from "./messages/messages.service";
 import {DocumentService} from "./documents/documents.service";
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
+import {FormsModule} from "@angular/forms";
+import {DndModule} from "ng2-dnd";
 
 
 
@@ -50,7 +52,9 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    DndModule.forRoot()
   ],
   providers: [ ContactService, MessageService, DocumentService, WindRefService ],
   bootstrap: [AppComponent]

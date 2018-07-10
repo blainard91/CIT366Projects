@@ -41,5 +41,4 @@ export class DocumentDetailComponent implements OnInit {
     this.router.navigate(['/documents']);
 
   }
-
 }

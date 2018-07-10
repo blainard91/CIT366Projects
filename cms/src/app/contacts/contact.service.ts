@@ -1,7 +1,8 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 import { Contact } from './contact.model';
-import { MOCKCONTACTS} from "./MOCKCONTACTS";
-import {Document} from "../documents/document.model";
+import { MOCKCONTACTS } from "./MOCKCONTACTS";
+import { Subject} from "rxjs/internal/Subject";
+import {Document } from "../documents/document.model";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import {Document} from "../documents/document.model";
 export class ContactService {
   @Output() contactSelectedEvent = new EventEmitter<Contact>();
   @Output() contactChangedEvent = new EventEmitter<Contact[]>();
+  @Output() contactListChangedEvent = new Subject<Contact[]>();
   contacts: Contact[] = [];
   currentContact: Contact;
 
@@ -43,4 +45,5 @@ export class ContactService {
     this.contacts.splice(pos, 1);
     this.contactChangedEvent.emit(this.contacts.slice());
   }
+
 }
