@@ -2,8 +2,10 @@ import {EventEmitter, Injectable, Output} from '@angular/core';
 import { Document } from './document.model';
 import { MOCKDOCUMENTS } from "./MOCKDOCUMENTS";
 import { Subject} from "rxjs/internal/Subject";
-import {forEach} from "@angular/router/src/utils/collection";
-import {current} from "codelyzer/util/syntaxKind";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
+import {stringify} from "querystring";
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +17,32 @@ export class DocumentService {
   documents: Document[] = [];
   maxDocumentId: number;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.documents = MOCKDOCUMENTS;
     this.maxDocumentId = this.getMaxId();
   }
 
   getDocuments(): Document[] {
+    this.http.get('https://bkacms-70a80.firebaseio.com/documents.json').subscribe(
+      (documents: Document[]) => {
+        this.documents = documents;
+        this.maxDocumentId = this.getMaxId();
+        this.documents.sort(function (a,b){
+          const docA = a.name.toUpperCase();
+          const docB = b.name.toUpperCase();
+          if (docA < docB) {
+            return -1;
+          } else if (docA > docB) {
+            return 1;
+          } else {
+            return 0;
+          }
+        })
+        this.documentListChangedEvent.next(this.documents.slice());
+        (error: any) => {
+          console.log(error);
+        }
+      })
     return this.documents.slice();
   }
 
@@ -42,6 +64,21 @@ export class DocumentService {
     this.documentChangedEvent.emit(this.documents.slice());
   }
 */
+
+  storeDocuments() {
+    const documentsString = JSON.stringify(this.documents);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    this.http.put("https://bkacms-70a80.firebaseio.com/documents.json", documentsString, {headers: headers})
+      .subscribe(() => {
+        this.documentListChangedEvent.next(this.documents.slice());
+      });
+
+  }
+
   getMaxId(): number {
     var maxId = 0;
     this.documents.forEach(function(document){
@@ -62,7 +99,7 @@ export class DocumentService {
     newDocument.id = this.maxDocumentId.toString();
     this.documents.push(newDocument);
     var documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {
@@ -78,7 +115,7 @@ export class DocumentService {
     newDocument.id = originalDocument.id;
     this.documents[pos] = newDocument;
     var documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 
   deleteDocument(document: Document) {
@@ -91,8 +128,8 @@ export class DocumentService {
       return;
     }
 
-    this.documents = this.documents.splice(pos, 1);
+    this.documents.splice(pos, 1);
     var documentsListClone = this.documents.slice();
-    this.documentListChangedEvent.next(documentsListClone);
+    this.storeDocuments();
   }
 }

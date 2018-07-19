@@ -279,13 +279,5 @@ export const MOCKCONTACTS: Contact[] = [
     }
   ]
   },
-  // index 18
-  {
-    id: '20',
-    name: 'Blaine Akers',
-    email: 'ake16001@byui.edu',
-    phone: '434-473-3807',
-    imageUrl: '../../assets/images/akersb.png',
-    group: null
-  },
+  // inde
 ];

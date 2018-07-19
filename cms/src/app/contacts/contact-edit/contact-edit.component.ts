@@ -47,8 +47,8 @@ export class ContactEditComponent implements OnInit {
         this.editMode = true;
         this.contact = JSON.parse(JSON.stringify(this.originalContact));
 
-        if (this.originalContact.group !== null) {
-          this.contact.group = this.originalContact.group.slice();
+        if (this.contact.group !== null) {
+          this.groupContacts = JSON.parse(JSON.stringify(this.originalContact.group));
         }
       }
     )
@@ -58,7 +58,7 @@ export class ContactEditComponent implements OnInit {
     const values = form.value;
     const id = this.getMaxId();
 
-    const newContact = new Contact("", values.name, values.email, values.phone, values.imageUrl, null);
+    const newContact = new Contact("", values.name, values.email, values.phone, values.imageUrl, this.groupContacts);
 
     if (this.editMode === true) {
       this.updateContact(this.originalContact, newContact)
@@ -126,7 +126,7 @@ export class ContactEditComponent implements OnInit {
     newContact.id = this.maxContactId.toString();
     this.contacts.push(newContact);
     var contactsListClone = this.contacts.slice();
-    this.contactService.contactListChangedEvent.next(contactsListClone);
+    this.contactService.storeContact();
   }
 
   updateContact(originalContact: Contact, newContact: Contact) {
@@ -142,7 +142,7 @@ export class ContactEditComponent implements OnInit {
     newContact.id = originalContact.id;
     this.contacts[pos] = newContact;
     var contactsListClone = this.contacts.slice();
-    this.contactService.contactListChangedEvent.next(contactsListClone);
+    this.contactService.storeContact();
   }
 
 }

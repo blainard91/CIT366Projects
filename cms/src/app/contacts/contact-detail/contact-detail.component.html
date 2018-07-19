@@ -21,6 +21,20 @@
         <label>Phone: </label>
         <span class="label-value">  {{ contact?.phone }}</span>
       </div>
+      <div class="form-group" *ngIf="contact.group">
+        <label for="groupList">Group contacts</label>
+
+        <div class="row" id="groupList"
+             style="min-height: 3rem;">
+
+          <div *ngFor="let contact of contact.group; let i = index">
+            <div>
+              <cms-contact-item class="col-sm-11" [contact]="contact"></cms-contact-item>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>
